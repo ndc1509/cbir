@@ -63,7 +63,8 @@ def get_contours(img):
     ret, thresh = cv2.threshold(gray_img, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     cv2.drawContours(img, contours, -1, (0, 255, 0), 1)
-    cv2.imshow('123', img)
+    pyplot.imshow(img)
+    pyplot.show()
 
 # MAIN
 list = get_image_list()
