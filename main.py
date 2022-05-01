@@ -1,50 +1,43 @@
 import cv2
 import numpy
-
 import feature_extractor
-from preprocess import get_image_list, resize_image
-from rgb_histogram import get_rgb_histogram
-
-#
-# def get_GLCM(image):
-#     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     graycom = skimage.feature.graycomatrix(gray_image, [1], [0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
-#
-#     # GLCM props
-#     contrast = skimage.feature.graycoprops(graycom, 'contrast')
-#     dissimilarity = skimage.feature.graycoprops(graycom, 'dissimilarity')
-#     homogeneity = skimage.feature.graycoprops(graycom, 'homogeneity')
-#     energy = skimage.feature.graycoprops(graycom, 'energy')
-#     correlation = skimage.feature.graycoprops(graycom, 'correlation')
-#     ASM = skimage.feature.graycoprops(graycom, 'ASM')
-#
-#     print("Contrast: {}".format(contrast))
-#     print("Dissimilarity: {}".format(dissimilarity))
-#     print("Homogeneity: {}".format(homogeneity))
-#     print("Energy: {}".format(energy))
-#     print("Correlation: {}".format(correlation))
-#     print("ASM: {}".format(ASM))
-#
-#     for i in range(0, 4):
-#         pyplot.plot(graycom[:, :, 0, i])
-#         pyplot.show()
-#
-#     return graycom
-
-# def get_contours(img):
-#     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-#     ret, thresh = cv2.threshold(gray_img, 127, 255, 0)
-#     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-#     cv2.drawContours(img, contours, -1, (0, 255, 0), 1)
-#     pyplot.imshow(img)
-#     pyplot.show()
-#     return contours
-
+import redisDB
+from preprocess import resize_image
+# from similarity_measure import euclidean_dist, manhattan_dist
 
 # MAIN
+
+# Đọc ảnh đầu vào và trích rút đặc trưng
 from similarity_measure import euclidean_dist, manhattan_dist
 
 img = resize_image(cv2.imread('images/1.jpg'))
-result1 = euclidean_dist(img, feature_vectors=feature_extractor.extract_database_feature())
-result2 = manhattan_dist(img, feature_vectors=feature_extractor.extract_database_feature())
-print(result1 + result2)
+vector = feature_extractor.extract_query_feature(img)
+
+# Cách 1
+
+
+# Tìm kiếm
+# query_vector = vector.astype(numpy.float32).tobytes()
+# result = redisDB.query(query_vector)
+# for doc in result.docs:
+#     print(doc)
+
+# Tạo index, trích xuất đặc trưng và lưu vào DB
+# redisDB.create_flat_index()
+# vector_dict = feature_extractor.extract_database_feature()
+# redisDB.save_vectors(vector_dict)
+
+# Xóa index
+# redisDB.drop_index()
+
+# ***
+
+# Cách 2
+
+# Lưu đặc trưng
+vector_dict = feature_extractor.extract_database_feature()
+redisDB.save_vectors_JSON(vector_dict)
+# result1 = euclidean_dist(img, vector_dict=feature_extractor.extract_database_feature())
+# print(result1)
+# result2 = manhattan_dist(img, vector_dict=feature_extractor.extract_database_feature())
+# print(result2)
