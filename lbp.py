@@ -3,8 +3,6 @@ import numpy
 from matplotlib import pyplot
 from skimage.feature import local_binary_pattern
 
-from preprocess import get_image_dict
-
 
 def get_LBP(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

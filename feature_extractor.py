@@ -1,8 +1,15 @@
-from feature_vector import combine_features
-from hog import get_hog
+import numpy
 from lbp import get_LBP
 from preprocess import get_image_dict
 from rgb_histogram import get_rgb_histogram
+
+
+# Kết hợp các vector thành 1 vector 1d array 1024 phần tử
+def combine_features(*features):
+    feature_vector = numpy.array([])
+    for feature in features:
+        feature_vector = numpy.concatenate((feature_vector, feature))
+    return feature_vector
 
 
 # Rút đặc trưng ảnh query
@@ -11,8 +18,7 @@ from rgb_histogram import get_rgb_histogram
 def extract_query_feature(img):
     rgb_hist = get_rgb_histogram(img)
     lbp_hist = get_LBP(img)
-    hog_hist = get_hog(img)
-    fv = combine_features(rgb_hist, lbp_hist, hog_hist)
+    fv = combine_features(rgb_hist, lbp_hist)
     # print(fv.size)
     return fv
 
@@ -27,8 +33,7 @@ def extract_database_feature():
     for i in image_dict:
         rgb_hist = get_rgb_histogram(image_dict[i])
         lbp_hist = get_LBP(image_dict[i])
-        hog_hist = get_hog(image_dict[i])
         images.append(i)
-        vectors.append(combine_features(rgb_hist, lbp_hist, hog_hist))
+        vectors.append(combine_features(rgb_hist, lbp_hist))
     vector_dict = dict(zip(images, vectors))
     return vector_dict
