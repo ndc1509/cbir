@@ -11,7 +11,7 @@ def get_LBP(image):
     # pyplot.show()
 
     hist, _ = numpy.histogram(lbp_image.ravel(), density=True,
-                              bins=256, range=(0, 255))
+                              bins=256, range=(0, 256))
     return hist
 
 
