@@ -1,6 +1,6 @@
 import numpy
 from lbp import get_LBP
-from preprocess import get_image_dict
+from lib import get_image_dict
 from rgb_histogram import get_rgb_histogram
 
 
@@ -13,7 +13,7 @@ def combine_features(*features):
 
 
 # Rút đặc trưng ảnh query
-# input img: ảnh đầu vào
+# input img: ảnh query
 # return vector đặc trưng
 def extract_query_feature(img):
     rgb_hist = get_rgb_histogram(img)
@@ -24,7 +24,6 @@ def extract_query_feature(img):
 
 
 # Trích rút đặc trưng từ bộ dữ liệu ảnh
-# Input image_dict: từ điển chứa tên ảnh - ảnh
 # return từ điển chứa tên ảnh - vector đặc trưng tương ứng
 def extract_database_feature():
     images = []

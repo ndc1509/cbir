@@ -20,7 +20,7 @@ def connectDB():
 # Value:
 # {
 #     "filename": "Tên file ảnh",
-#     "vector": "Vector đặc trưng được lưu dưới dạng JSON"
+#     "vector": "Vector đặc trưng được lưu dưới dạng JSON string"
 # }
 
 def save_vectors_JSON(vector_dict):
@@ -37,9 +37,10 @@ def save_vectors_JSON(vector_dict):
     print("Vectors saved")
 
 
+# lấy vector từ csdl
 def get_vectors():
     r = connectDB()
-    keys = r.keys()
+    keys = r.keys("images:*")
     vectors = []
     for key in keys:
         data = r.hgetall(key)

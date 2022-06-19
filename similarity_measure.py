@@ -3,9 +3,11 @@ import scipy.spatial.distance
 from feature_extractor import extract_query_feature
 
 
-# def sort_key(item):
-#     return item[1]
-
+# Tính khoảng cách euclid
+# input:
+# - ảnh query
+# - list object chứa tên ảnh - vector đặc trưng ảnh
+# output: list chứa 10 kết quả giống với ảnh đầu vào nhất
 def euclidean_dist(image, vector_list):
     query_fv = extract_query_feature(image)
     dissimilarity_dict = {}
@@ -18,13 +20,12 @@ def euclidean_dist(image, vector_list):
         dissimilarity_dict[filename] = scipy.spatial.distance.euclidean(query_fv, vector)
     for k, v in sorted(dissimilarity_dict.items(), key=lambda item: item[1]):
         sorted_dict[k] = v
-    print(sorted_dict)
+    # print(sorted_dict)
     for item in sorted_dict.items():
-        if count == 5: break
+        if count == 10: break
         results.append(item)
         count += 1
     return results
-
 
 # def manhattan_dist(image, vector_dict):
 #     query_fv = extract_query_feature(image)
@@ -32,4 +33,3 @@ def euclidean_dist(image, vector_list):
 #     for i in vector_dict:
 #         dissimilarity_dict[i] = scipy.spatial.distance.cityblock(query_fv, vector_dict[i])
 #     return dissimilarity_dict
-
