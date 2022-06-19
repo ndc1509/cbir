@@ -4,7 +4,7 @@ from lib import get_image_dict
 from rgb_histogram import get_rgb_histogram
 
 
-# Kết hợp các vector thành 1 vector 1d array 1024 phần tử
+# Kết hợp các vector thành 1 vector 1024 chiều
 def combine_features(*features):
     feature_vector = numpy.array([])
     for feature in features:
