@@ -26,13 +26,10 @@ def extract_query_feature(img):
 # Trích rút đặc trưng từ bộ dữ liệu ảnh
 # return từ điển chứa tên ảnh - vector đặc trưng tương ứng
 def extract_database_feature():
-    images = []
-    vectors = []
+    vector_dict = {}
     image_dict = get_image_dict()
     for i in image_dict:
         rgb_hist = get_rgb_histogram(image_dict[i])
         lbp_hist = get_LBP(image_dict[i])
-        images.append(i)
-        vectors.append(combine_features(rgb_hist, lbp_hist))
-    vector_dict = dict(zip(images, vectors))
+        vector_dict[i] = combine_features(rgb_hist, lbp_hist)
     return vector_dict

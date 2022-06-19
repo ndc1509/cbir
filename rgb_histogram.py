@@ -20,7 +20,7 @@ from lib import get_image_dict
 #     return hist_arr
 
 # su dung lib numpy
-# return vector lược đồ màu rgb của ảnh (256 x 3 = 768 phần tử)
+# return vector lược đồ màu rgb của ảnh (256 x 3 = 768 chiều)
 def get_rgb_histogram(image):
     colors = ('r', 'g', 'b')
     hist_arr = numpy.array([])
